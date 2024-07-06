@@ -11,6 +11,7 @@ This is an opinionated code style checker cor C++ that evaluates your codebase w
 - Avoid deep nesting (16 spaces max)
 - Where you throw, you must catch
 
+Quick demo:
 
 ```bash
 LintLord is evaluating bad_file.cpp
