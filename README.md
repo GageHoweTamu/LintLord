@@ -10,3 +10,13 @@ This is an opinionated code style checker cor C++ that evaluates your codebase w
 - Avoid code duplication
 - Avoid deep nesting (16 spaces max)
 - Where you throw, you must catch
+
+
+```bash
+LintLord is evaluating bad_file.cpp
+
+Incorrect constant name: myConstant (should be ALL_CAPS)
+Incorrect variable name: MYVARIABLE (should be camelCase)
+Bad class name: badClass (should be PascalCase)
+LintLord's approval: 62.5%
+```
