@@ -13,7 +13,7 @@ This is an opinionated code style checker for C++ that evaluates your codebase w
 
 Quick demo:
 
-```bash
+```
 LintLord is evaluating bad_file.cpp
 
 Incorrect constant name: myConstant (should be ALL_CAPS)
