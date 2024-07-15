@@ -4,12 +4,12 @@
 #include <regex>
 #include <cctype>
 
-// custom regex for checking naming conventions
+// universal regex functions for checking naming conventions
 bool isCamelCase(const std::string &str) { return std::regex_match(str, std::regex("^[a-z][a-zA-Z0-9]*$")); }
 bool isPascalCase(const std::string &str) { return std::regex_match(str, std::regex("^[A-Z][a-zA-Z0-9]*$")); }
 bool isAllCaps(const std::string &str) { return std::regex_match(str, std::regex("^[A-Z][A-Z0-9_]*$")); }
 
-std::pair<int, int> checkConstants(const std::string &content)
+std::pair<int, int> checkConstantNames(const std::string &content)
 {
     int total = 0, incorrect = 0;
     std::regex constRegex(R"(\bconst\s+(?:int|float|double|char|bool|long|short|unsigned|signed)\s+([a-zA-Z_]\w*)\b)");
@@ -30,7 +30,7 @@ std::pair<int, int> checkConstants(const std::string &content)
     return {total, incorrect};
 }
 
-std::pair<int, int> checkVariables(const std::string &content)
+std::pair<int, int> checkVariableNames(const std::string &content)
 {
     int total = 0, incorrect = 0;
     std::regex varRegex(R"(\b(?:int|float|double|char|bool|long|short|unsigned|signed)\s+([a-zA-Z_]\w*)\b)");
@@ -51,7 +51,7 @@ std::pair<int, int> checkVariables(const std::string &content)
     return {total, incorrect};
 }
 
-std::pair<int, int> checkClasses(const std::string &content)
+std::pair<int, int> checkClassNames(const std::string &content)
 {
     int total = 0, incorrect = 0;
     std::regex classRegex(R"(\bclass\s+([a-zA-Z_]\w*)\b)");
@@ -72,7 +72,7 @@ std::pair<int, int> checkClasses(const std::string &content)
     return {total, incorrect};
 }
 
-std::pair<int, int> checkFunctions(const std::string &content)
+std::pair<int, int> checkFunctionNames(const std::string &content)
 {
     int total = 0, incorrect = 0;
     std::regex funcRegex(R"(\b(?:void|int|float|double|char|bool|long|short|unsigned|signed)\s+([a-zA-Z_]\w*)\s*\()");
@@ -91,6 +91,13 @@ std::pair<int, int> checkFunctions(const std::string &content)
         }
     }
     return {total, incorrect};
+}
+
+// check for unused variables
+bool isUnused(const std::string &content, const std::string &name)
+{
+    std::regex varRegex(R"(\b(?:int|float|double|char|bool|long|short|unsigned|signed)\s+)" + name + R"(\b)");
+    return !std::regex_search(content, varRegex);
 }
 
 double calculateScore(int totalIdentifiers, int incorrectIdentifiers)
@@ -113,10 +120,10 @@ int processFile(const std::string &filename)
 
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
-    auto [totalConstants, incorrectConstants] = checkConstants(content);
-    auto [totalVariables, incorrectVariables] = checkVariables(content);
-    auto [totalClasses, incorrectClasses] = checkClasses(content);
-    auto [totalFunctions, incorrectFunctions] = checkFunctions(content);
+    auto [totalConstants, incorrectConstants] = checkConstantNames(content);
+    auto [totalVariables, incorrectVariables] = checkVariableNames(content);
+    auto [totalClasses, incorrectClasses] = checkClassNames(content);
+    auto [totalFunctions, incorrectFunctions] = checkFunctionNames(content);
 
     int totalIdentifiers = totalConstants + totalVariables + totalClasses + totalFunctions;
     int incorrectIdentifiers = incorrectConstants + incorrectVariables + incorrectClasses + incorrectFunctions;

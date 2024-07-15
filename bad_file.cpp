@@ -15,6 +15,7 @@ public:
     }
 };
 
+
 int main()
 {
     int MYVARIABLE = 42; // should be "myVariable"
