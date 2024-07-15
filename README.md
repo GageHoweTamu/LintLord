@@ -1,6 +1,6 @@
 # LintLord
 
-This is an opinionated code style checker cor C++ that evaluates your codebase with an oppressive rule... you might say, a regex rule. LintLord has a few simple demands...
+This is an opinionated code style checker for C++ that evaluates your codebase with an oppressive rule... you might say, a regex rule. LintLord has a few simple demands...
 
 - Variables and parameters should use camelCase
 - Constants should be in ALL_CAPS with underscores
@@ -13,7 +13,7 @@ This is an opinionated code style checker cor C++ that evaluates your codebase w
 
 Quick demo:
 
-```bash
+```
 LintLord is evaluating bad_file.cpp
 
 Incorrect constant name: myConstant (should be ALL_CAPS)
